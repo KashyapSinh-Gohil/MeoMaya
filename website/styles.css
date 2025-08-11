@@ -24,14 +24,44 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
 .btn { display: inline-block; padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); color: var(--text); text-decoration: none; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); }
 .btn.primary { border-color: rgba(76,201,240,0.5); background: linear-gradient(180deg, rgba(76,201,240,0.18), rgba(76,201,240,0.08)); color: #eafaff; }
 .btn:hover { transform: translateY(-1px); transition: transform .15s ease; }
+.btn .ripple-ink { position: absolute; border-radius: 999px; transform: scale(0); background: rgba(255,255,255,0.3); animation: ripple .6s linear; pointer-events: none; }
+@keyframes ripple { to { transform: scale(1); opacity: 0; } }
+
+/* Decorative orbs & gridlines */
+.bg-ornaments { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.orb { position: absolute; width: 380px; height: 380px; border-radius: 999px; filter: blur(40px); opacity: 0.5; }
+.orb-a { top: -60px; right: -40px; background: radial-gradient(circle at 30% 30%, rgba(76,201,240,0.6), transparent 60%); animation: floatA 12s ease-in-out infinite; }
+.orb-b { bottom: -80px; left: -60px; background: radial-gradient(circle at 70% 70%, rgba(167,139,250,0.5), transparent 60%); animation: floatB 14s ease-in-out infinite; }
+.gridlines { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 46px 46px; mask-image: radial-gradient(60% 60% at 50% 0%, black, transparent 70%); }
+@keyframes floatA { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(14px) } }
+@keyframes floatB { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-14px) } }
+
+/* Slider */
+.slider { position: relative; margin: 0 auto; max-width: 980px; padding: 8px 0 4px; }
+.slides { position: relative; min-height: 180px; }
+.slide { position: absolute; inset: 0; opacity: 0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+.slide.active { position: relative; opacity: 1; transform: translateY(0); }
+.nav { position: absolute; top: 50%; transform: translateY(-50%); border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07); color: var(--text); width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; cursor: pointer; }
+.prev { left: -8px; }
+.next { right: -8px; }
+.dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+.dot { width: 8px; height: 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); cursor: pointer; }
+.dot.active { background: linear-gradient(90deg, var(--brand), var(--brand-alt)); border-color: transparent; }
 
 .code pre { margin: 18px auto 0; text-align: left; padding: 16px; max-width: 840px; background: #0e1626; color: #d4e0f5; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: auto; }
 
 .features { padding: 36px 0 12px; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
-.card { background: var(--panel); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); }
+.card { background: var(--panel); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); transform: translateY(8px); opacity: 0; transition: transform .5s ease, opacity .5s ease; }
+.revealed.card, .reveal-on-scroll.revealed { transform: translateY(0); opacity: 1; }
 .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
 .card p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+.showcase { padding: 24px 0 24px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+.tile { background: #0e1626; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px; transform: translateY(10px); opacity: 0; transition: transform .5s ease, opacity .5s ease; }
+.tile h4 { margin: 0 0 8px; }
+.tile pre { margin: 0; color: #d4e0f5; overflow: auto; }
 
 .getting-started { padding: 24px 0 40px; }
 .getting-started h2 { margin: 0 0 10px; }
@@ -42,4 +72,4 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
 .footer-inner .links a { color: var(--muted); text-decoration: none; margin-left: 14px; }
 .footer-inner .links a:hover { color: var(--text); }
 
-@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .nav a{ margin-left: 12px; } }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .tiles { grid-template-columns: 1fr; } .nav a{ margin-left: 12px; } }

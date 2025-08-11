@@ -21,48 +21,99 @@
   </header>
 
   <section class="hero">
+    <div class="bg-ornaments" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="gridlines"></div>
+    </div>
     <div class="container hero-inner">
-      <h1>Fast, Local‑First NLP for Everyone</h1>
-      <p class="subtitle">A pure‑Python, hardware‑aware NLP framework with a clean pipeline, optional multimodal support, and zero always‑on third‑party dependencies.</p>
-      <div class="cta">
-        <a class="btn primary" href="../meomaya-docs/index.html">View Documentation</a>
-        <a class="btn" href="#getting-started">Get Started</a>
+      <div class="slider" role="region" aria-label="Highlights">
+        <div class="slides">
+          <div class="slide active">
+            <h1>Fast, Local‑First NLP for Everyone</h1>
+            <p class="subtitle">A pure‑Python, hardware‑aware NLP framework with a clean pipeline and zero always‑on third‑party dependencies.</p>
+          </div>
+          <div class="slide">
+            <h1>Modular. Extensible. Clean.</h1>
+            <p class="subtitle">Normalize → Tokenize → Tag → Parse. Swap components, add modalities, and keep it readable.</p>
+          </div>
+          <div class="slide">
+            <h1>Multimodal (Optional)</h1>
+            <p class="subtitle">Image, audio, and video metadata pipelines that stay fully offline when you need them to.</p>
+          </div>
+        </div>
+        <button class="nav prev" aria-label="Previous">‹</button>
+        <button class="nav next" aria-label="Next">›</button>
+        <div class="dots" aria-label="Slide pagination" role="tablist"></div>
       </div>
-      <div class="code">
+
+      <div class="cta">
+        <a class="btn primary ripple" href="../meomaya-docs/index.html">View Documentation</a>
+        <a class="btn ripple" href="#getting-started">Get Started</a>
+      </div>
+      <div class="code reveal-on-scroll">
         <pre><code># Run the API locally
 uvicorn meomaya.api.server:app --host 0.0.0.0 --port 8000
 
 # CLI (text)
 PYTHONPATH=. python -m meomaya.cli.meomaya_cmd "Hello from MeoMaya!" --mode text</code></pre>
+        <button class="copy-btn" data-copy="api">Copy</button>
       </div>
     </div>
   </section>
 
   <section id="features" class="features">
     <div class="container grid">
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <h3>Clean Pipeline</h3>
         <p>Normalize → Tokenize → Tag → Parse. Modular components, easy to understand and extend.</p>
       </div>
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <h3>Local‑First</h3>
         <p>Runs fully on‑device. Optional HF models are strictly local (no downloads).</p>
       </div>
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <h3>Multimodal (Optional)</h3>
         <p>Image, audio, and video pipelines extract real metadata when local libs are available.</p>
       </div>
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <h3>Hardware‑Aware</h3>
         <p>Detects CPU/CUDA/MPS without forcing heavy dependencies in the core.</p>
       </div>
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <h3>Developer Friendly</h3>
         <p>Simple API, FastAPI server, CLI, thorough tests, and readable code.</p>
       </div>
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <h3>Offline Mode</h3>
         <p>Set <code>MEOMAYA_STRICT_OFFLINE=1</code> to disable downloads and use lightweight fallbacks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase">
+    <div class="container">
+      <h2 class="reveal-on-scroll">Tiny, powerful building blocks</h2>
+      <div class="tiles">
+        <div class="tile reveal-on-scroll">
+          <h4>Tokenizer</h4>
+          <pre><code>from meomaya.core.tokenizer import Tokenizer
+
+print(Tokenizer().tokenize("Hello, world!"))</code></pre>
+        </div>
+        <div class="tile reveal-on-scroll">
+          <h4>Tagger</h4>
+          <pre><code>from meomaya.core.tagger import Tagger
+
+tagger = Tagger()
+print(tagger.tag(["This","is","MeoMaya"]))</code></pre>
+        </div>
+        <div class="tile reveal-on-scroll">
+          <h4>Parser</h4>
+          <pre><code>from meomaya.core.parser import Parser
+
+print(Parser().parse([("MeoMaya","NN")]))</code></pre>
+        </div>
       </div>
     </div>
   </section>
@@ -98,7 +149,88 @@ pip install -r requirements-dev.txt</code></pre>
   </footer>
 
   <script>
+    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Slider logic
+    (function(){
+      const slider = document.querySelector('.slider');
+      if(!slider) return;
+      const slides = Array.from(slider.querySelectorAll('.slide'));
+      const prev = slider.querySelector('.prev');
+      const next = slider.querySelector('.next');
+      const dots = slider.querySelector('.dots');
+      let index = 0;
+      let timer = null;
+
+      function go(i){
+        slides[index].classList.remove('active');
+        dots.children[index] && dots.children[index].classList.remove('active');
+        index = (i + slides.length) % slides.length;
+        slides[index].classList.add('active');
+        dots.children[index] && dots.children[index].classList.add('active');
+      }
+      function autoplay(){
+        clearInterval(timer);
+        timer = setInterval(()=>go(index+1), 4500);
+      }
+      // Build dots
+      slides.forEach((_,i)=>{
+        const b = document.createElement('button');
+        b.setAttribute('role','tab');
+        b.className = 'dot' + (i===0?' active':'');
+        b.addEventListener('click', ()=>{ go(i); autoplay(); });
+        dots.appendChild(b);
+      });
+      prev.addEventListener('click', ()=>{ go(index-1); autoplay(); });
+      next.addEventListener('click', ()=>{ go(index+1); autoplay(); });
+      slider.addEventListener('mouseenter', ()=>clearInterval(timer));
+      slider.addEventListener('mouseleave', autoplay);
+      document.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft') { go(index-1); autoplay(); }
+        if(e.key==='ArrowRight'){ go(index+1); autoplay(); }
+      });
+      autoplay();
+    })();
+
+    // Ripple on buttons
+    document.querySelectorAll('.ripple').forEach(btn=>{
+      btn.addEventListener('click', function(e){
+        const rect = this.getBoundingClientRect();
+        const circle = document.createElement('span');
+        const diameter = Math.max(rect.width, rect.height);
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${e.clientX - rect.left - diameter/2}px`;
+        circle.style.top  = `${e.clientY - rect.top - diameter/2}px`;
+        circle.className = 'ripple-ink';
+        this.appendChild(circle);
+        setTimeout(()=>circle.remove(), 600);
+      });
+    });
+
+    // Scroll reveal
+    (function(){
+      const els = document.querySelectorAll('.reveal-on-scroll');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ entry.target.classList.add('revealed'); io.unobserve(entry.target);} 
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el=>io.observe(el));
+    })();
+
+    // Copy button for code block
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const pre = btn.previousElementSibling;
+        if(!pre) return;
+        const text = pre.innerText;
+        navigator.clipboard.writeText(text).then(()=>{
+          btn.textContent = 'Copied!';
+          setTimeout(()=>btn.textContent='Copy', 1200);
+        });
+      });
+    });
   </script>
 </body>
 </html>
