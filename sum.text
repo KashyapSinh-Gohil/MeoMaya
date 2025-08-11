@@ -176,4 +176,5 @@ MeoMaya Project Summary (from overview to delivery)
 - Tests:
   - PYTHONPATH=. python -m pytest meomaya/tests -v
 
+Remove sum.text
 
