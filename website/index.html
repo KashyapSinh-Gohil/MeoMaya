@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeoMaya — Fast, Local‑First NLP</title>
+  <meta name="description" content="MeoMaya: A pure‑Python, fast, local‑first NLP framework with a clean, modular pipeline and optional multimodal support." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">MeoMaya</div>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#getting-started">Get Started</a>
+        <a href="../meomaya-docs/index.html">Docs</a>
+        <a href="https://github.com/KashyapSinh-Gohil/MeoMaya" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1>Fast, Local‑First NLP for Everyone</h1>
+      <p class="subtitle">A pure‑Python, hardware‑aware NLP framework with a clean pipeline, optional multimodal support, and zero always‑on third‑party dependencies.</p>
+      <div class="cta">
+        <a class="btn primary" href="../meomaya-docs/index.html">View Documentation</a>
+        <a class="btn" href="#getting-started">Get Started</a>
+      </div>
+      <div class="code">
+        <pre><code># Run the API locally
+uvicorn meomaya.api.server:app --host 0.0.0.0 --port 8000
+
+# CLI (text)
+PYTHONPATH=. python -m meomaya.cli.meomaya_cmd "Hello from MeoMaya!" --mode text</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="container grid">
+      <div class="card">
+        <h3>Clean Pipeline</h3>
+        <p>Normalize → Tokenize → Tag → Parse. Modular components, easy to understand and extend.</p>
+      </div>
+      <div class="card">
+        <h3>Local‑First</h3>
+        <p>Runs fully on‑device. Optional HF models are strictly local (no downloads).</p>
+      </div>
+      <div class="card">
+        <h3>Multimodal (Optional)</h3>
+        <p>Image, audio, and video pipelines extract real metadata when local libs are available.</p>
+      </div>
+      <div class="card">
+        <h3>Hardware‑Aware</h3>
+        <p>Detects CPU/CUDA/MPS without forcing heavy dependencies in the core.</p>
+      </div>
+      <div class="card">
+        <h3>Developer Friendly</h3>
+        <p>Simple API, FastAPI server, CLI, thorough tests, and readable code.</p>
+      </div>
+      <div class="card">
+        <h3>Offline Mode</h3>
+        <p>Set <code>MEOMAYA_STRICT_OFFLINE=1</code> to disable downloads and use lightweight fallbacks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="getting-started" class="getting-started">
+    <div class="container">
+      <h2>Getting Started</h2>
+      <ol>
+        <li>Clone the repository and create a virtual environment.</li>
+        <li>Install runtime dependencies.</li>
+        <li>Run the API or the CLI. Explore the <a href="../meomaya-docs/index.html">documentation</a> for more.</li>
+      </ol>
+      <pre><code>git clone https://github.com/KashyapSinh-Gohil/MeoMaya.git
+cd MeoMaya
+python -m venv .venv
+source .venv/bin/activate
+pip install -r meomaya/requirements.txt
+
+# Optional dev/API tooling
+pip install -r requirements-dev.txt</code></pre>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> MeoMaya</span>
+      <div class="links">
+        <a href="../meomaya-docs/index.html">Docs</a>
+        <a href="https://github.com/KashyapSinh-Gohil/MeoMaya" target="_blank" rel="noopener">GitHub</a>
+        <a href="../meomaya/README.md">README</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
