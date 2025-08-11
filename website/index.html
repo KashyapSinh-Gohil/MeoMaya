@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
   <title>MeoMaya Framework — Fast, Lightweight, Local‑First NLP</title>
   <meta name="description" content="MeoMaya is a fast, lightweight, SEO‑friendly, local‑first NLP framework in Python with a clean, modular pipeline and optional multimodal support." />
   <meta name="keywords" content="MeoMaya, NLP framework, lightweight, fast, modular, SEO‑friendly, local‑first, Python NLP, tokenization, parsing, POS tagging" />
@@ -43,6 +44,7 @@
         <a href="../meomaya-docs/index.html">Docs</a>
         <a href="https://github.com/KashyapSinh-Gohil/MeoMaya" target="_blank" rel="noopener">GitHub</a>
       </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
     </div>
   </header>
 
@@ -181,26 +183,7 @@ print(Parser().parse([("MeoMaya","NN")]))</code></pre>
     </div>
   </section>
 
-  <section id="testimonials" class="testimonials">
-    <div class="parallax-bg"></div>
-    <div class="container">
-      <h2 class="section-title reveal-on-scroll">What developers say</h2>
-      <div class="testi-grid">
-        <blockquote class="testi reveal-on-scroll">
-          <div class="quote-content">"MeoMaya's clean pipeline made it simple to plug into our existing stack—with better performance and no external calls."</div>
-          <cite>— Senior Engineer</cite>
-        </blockquote>
-        <blockquote class="testi reveal-on-scroll">
-          <div class="quote-content">"Finally an NLP toolkit that respects offline and privacy by design."</div>
-          <cite>— Research Lead</cite>
-        </blockquote>
-        <blockquote class="testi reveal-on-scroll">
-          <div class="quote-content">"The FastAPI + CLI combo is perfect for quick prototyping and production."</div>
-          <cite>— Data Scientist</cite>
-        </blockquote>
-      </div>
-    </div>
-  </section>
+  
 
   <section id="blog" class="blog">
     <div class="container">
@@ -343,6 +326,21 @@ pip install -r requirements-dev.txt</code></pre>
     }
     window.addEventListener('scroll', updateHeader);
 
+    // Theme toggle (respects device preference by default)
+    (function(){
+      const html = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const stored = localStorage.getItem('theme');
+      if(stored){ html.dataset.theme = stored; }
+      function setIcon(){ toggle.textContent = (html.dataset.theme === 'dark') ? '☀️' : '🌙'; }
+      setIcon();
+      toggle.addEventListener('click', ()=>{
+        html.dataset.theme = (html.dataset.theme === 'dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', html.dataset.theme);
+        setIcon();
+      });
+    })();
+
     // Slider logic
     (function(){
       const slider = document.querySelector('.slider');
@@ -422,6 +420,20 @@ pip install -r requirements-dev.txt</code></pre>
         navigator.clipboard.writeText(text).then(()=>{
           btn.textContent = 'Copied!';
           setTimeout(()=>btn.textContent='Copy', 1200);
+        });
+      });
+    });
+
+    // Copy for mini code blocks in Learn & build
+    document.querySelectorAll('.copy-mini').forEach((btn, idx)=>{
+      btn.addEventListener('click', ()=>{
+        const pre = btn.parentElement.querySelector('.mini-code');
+        if(!pre) return;
+        const text = pre.innerText;
+        navigator.clipboard.writeText(text).then(()=>{
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(()=>btn.textContent = original, 1200);
         });
       });
     });
