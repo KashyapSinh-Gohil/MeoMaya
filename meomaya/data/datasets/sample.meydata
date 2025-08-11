@@ -1,0 +1,12 @@
+[
+    {
+        "text": "This is a simple sentence.",
+        "tokens": ["This", "is", "a", "simple", "sentence", "."],
+        "tags": ["DT", "VBZ", "DT", "JJ", "NN", "."]
+    },
+    {
+        "text": "Hello, world!",
+        "tokens": ["Hello", ",", "world", "!"],
+        "tags": ["UH", ",", "NN", "."]
+    }
+]

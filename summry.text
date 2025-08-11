@@ -1,0 +1,179 @@
+MeoMaya Project Summary (from overview to delivery)
+
+1) What it is (elevator pitch)
+- MeoMaya is a pure-Python, high-speed NLP framework focused on simplicity, low resource use, and clarity.
+- Provides a complete text pipeline (normalize → tokenize → tag → parse) plus lightweight ML utilities (TF‑IDF Vectorizer, centroid Classifier).
+- Optional pieces: local-only Hugging Face wrappers (offline), multimodal placeholders (image/audio/video), and a FastAPI REST service.
+- Hardware-aware execution chooses among CPU/CUDA/MPS without forcing a torch dependency.
+
+2) Goals and design principles
+- Minimal, readable code with simple abstractions (clear pipelines; no heavy framework lock-in).
+- Fast startup and low memory footprint; usable in constrained environments.
+- Strict offline capability and deterministic behavior when required.
+- Extensibility via a central runner (`Modelify`) and a registry for pipelines.
+
+3) Key features
+- Core NLP pipeline: `Normalizer`, `Tokenizer`, `Tagger`, `Parser`.
+- ML utilities: `Vectorizer` (TF‑IDF), `Classifier` (centroid/cosine similarity).
+- Central runner: `Modelify` detects mode and dispatches to pipelines with a unified output.
+- REST API (optional): endpoints `/run` and `/run/batch` using FastAPI.
+- Multimodal stubs: text (built-in), optional image/audio/video pipelines.
+- Hardware selection: automatic selection of `cpu`/`cuda`/`mps`.
+- Offline-first: avoids downloads; supports local model paths; graceful fallbacks.
+
+4) Architecture at a glance
+- Entry points
+  - CLI: `python -m meomaya` → invokes `meomaya/__main__.py` → `cli/meomaya_cmd.py` → `Modelify`.
+  - REST: `meomaya/api/server.py` (FastAPI) → persistent `Modelify` engine in app state.
+- Core orchestration
+  - `Modelify` maintains a registry of pipelines (built-in `text`; optional image/audio/video).
+  - Mode is resolved from explicit `--mode`, file extension, or default to text for plain strings.
+- Pipelines
+  - `text/pipeline.py` implements `process`, optional batch/stream methods, and optional HF integrations via environment variables.
+- Utilities
+  - `core/utils.py` for mode detection and path checks.
+  - `core/hardware.py` for device selection honoring `MEOMAYA_DEVICE`.
+
+5) Repo layout (high-signal directories)
+- `meomaya/core/`: NLP primitives, hardware utils, model registry and runner.
+- `meomaya/text/`: `TextPipeline` (primary, production-grade pipeline).
+- `meomaya/ml/`: `vectorizer.py`, `classifier.py` (pure-Python ML tools).
+- `meomaya/api/`: `server.py` (FastAPI endpoints `/run`, `/run/batch`).
+- `meomaya/cli/`: `meomaya_cmd.py` (CLI entry used by `python -m meomaya`).
+- `meomaya/examples/`: `full_nlp_workflow_demo.py` (end-to-end workflow demo).
+- `meomaya/docs/index.md` and `meomaya-docs/index.html`: project docs (Markdown and static HTML).
+- `website/`: simple landing page and styles.
+
+6) Installation (development setup)
+- Python 3.11+
+- Commands:
+  - python -m venv .venv
+  - source .venv/bin/activate
+  - pip install -r meomaya/requirements.txt
+  - Optional dev/API tooling: pip install -r requirements-dev.txt
+
+7) CLI usage (module entry)
+- General form:
+  - python -m meomaya "Your text here" --mode text
+- Auto-detection examples:
+  - Text string: defaults to text mode
+  - File path with extension → mode from extension map (e.g., .jpg → image, .wav → audio)
+- CLI options:
+  - --mode: text | audio | image | video | 3d | fusion (override auto-detect)
+  - --model: placeholder for future model selection
+
+8) REST API usage
+- Start server:
+  - uvicorn meomaya.api.server:app --host 0.0.0.0 --port 8000
+- Endpoints:
+  - POST /run
+    - Body: {"input": Any, "mode": "text"|... (optional)}
+    - Returns: unified pipeline output {mode, results, model, meta}
+  - POST /run/batch
+    - Body: {"inputs": [Any, ...], "mode": "text"|... (optional)}
+    - Optimized text batch path: uses `TextPipeline.process_batch` when mode=="text"
+- Examples:
+  - curl -X POST http://localhost:8000/run -H 'Content-Type: application/json' \
+      -d '{"input": "Hello from MeoMaya!", "mode": "text"}'
+  - curl -X POST http://localhost:8000/run/batch -H 'Content-Type: application/json' \
+      -d '{"inputs": ["hi", "there"], "mode": "text"}'
+
+9) Environment variables
+- MEOMAYA_STRICT_OFFLINE=1
+  - Forces strict offline behavior in `Normalizer` and `Tagger`; uses built-in fallbacks.
+- MEOMAYA_DEVICE=cpu|cuda|mps
+  - Overrides automatic device selection.
+- MEOMAYA_HF_CLS_PATH
+  - Local path for a text-classification model; enables `TextPipeline` classification via HF wrapper.
+- MEOMAYA_HF_POS_PATH
+  - Local path for a POS model; enables HF POS tagging in `TextPipeline`.
+- MEOMAYA_HF_PARSER_PATH
+  - Local path for a parser model; enables HF parsing in `TextPipeline`.
+
+10) Text pipeline details (what it does)
+- Input: string or path-like (reads file if path)
+- Steps:
+  - normalize → tokenize → tag → parse
+  - Optional HF overrides for POS and parser when env paths set and flags enabled
+  - Lightweight summarization (first tokens) and classification (neutral by default, HF when configured)
+- Output schema (`results`):
+  - normalized: str
+  - tokens: list[str]
+  - tags: list[(token, pos)]
+  - parse: dict (placeholder tree)
+  - summary: str (first ~20 tokens)
+  - classification: str (default "neutral" unless HF classifier configured)
+- Batch & stream helpers:
+  - process_batch(inputs: list[Any]) → list[dict]
+  - process_stream(inputs: iterator) → yields dict
+
+11) ML utilities (how they work)
+- Vectorizer (TF‑IDF):
+  - fit_transform(documents) → list[list[float]]
+  - transform(documents) → list[list[float]]
+- Classifier (centroid / cosine):
+  - train(X, y)
+  - classify(X_new) → list[str]
+
+12) Hardware detection (how selection works)
+- `core/hardware.select_device()` attempts:
+  - MEOMAYA_DEVICE env
+  - If prefer_gpu=True and torch present: cuda → mps → cpu
+  - Else: cpu
+
+13) Testing and quality
+- Run tests:
+  - PYTHONPATH=. python -m pytest meomaya/tests -v
+- Linting/formatting (dev):
+  - black, isort, flake8 configured in `requirements-dev.txt` and tools configs.
+- Example script (manual verification):
+  - python meomaya/examples/full_nlp_workflow_demo.py
+
+14) Documentation and website
+- Developer/user docs (Markdown): `meomaya/docs/index.md`
+- Static docs site: `meomaya-docs/index.html`
+- Website landing page: `website/index.html` with `website/styles.css`
+
+15) Packaging & entry points
+- `meomaya/pyproject.toml` defines package metadata, extras, and script entry:
+  - Extras: api (FastAPI/uvicorn), hf (transformers/torch), full (indic-nlp, cython, click)
+  - Script entry: `meomaya = meomaya.cli.meomaya_cmd:main`
+- Module entry for CLI: `meomaya/__main__.py` → allows `python -m meomaya`
+
+16) Security & offline posture
+- No external services required; all processing occurs locally.
+- Offline-first design; set `MEOMAYA_STRICT_OFFLINE=1` for strict environments.
+- HF integrations assume local model files; if unavailable, gracefully fall back.
+
+17) Roadmap (next steps)
+- Expand parser from placeholder to a richer dependency parser.
+- Improve multimodal pipelines beyond metadata extraction (image/audio/video).
+- Add more examples and benchmarks; structured datasets for demos.
+- Optional ONNX runtime support (extra present in pyproject) and performance guides.
+- Enrich API with healthz/info endpoints and async batch processing.
+- Publish comprehensive API reference and typed docs.
+
+18) Contributing
+- Standard GitHub flow: fork → feature branch → edits + tests → PR.
+- Code style: prefer clear, descriptive names; guard clauses; handle edge cases; keep functions focused.
+- Run tests and linters before submitting PRs.
+
+19) License and contact
+- License: Polyform Noncommercial 1.0.0 (non‑commercial use permitted).
+- Commercial licensing: contact Kagohil000@gmail.com.
+
+20) Quick command index
+- Setup (dev):
+  - python -m venv .venv && source .venv/bin/activate
+  - pip install -r meomaya/requirements.txt
+  - pip install -r requirements-dev.txt    # optional
+- CLI:
+  - python -m meomaya "Hello from MeoMaya!" --mode text
+- API:
+  - uvicorn meomaya.api.server:app --host 0.0.0.0 --port 8000
+  - curl -X POST http://localhost:8000/run -H 'Content-Type: application/json' -d '{"input": "Hi", "mode": "text"}'
+  - curl -X POST http://localhost:8000/run/batch -H 'Content-Type: application/json' -d '{"inputs": ["hi", "there"], "mode": "text"}'
+- Tests:
+  - PYTHONPATH=. python -m pytest meomaya/tests -v
+
+

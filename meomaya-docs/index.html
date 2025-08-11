@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeoMaya Documentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5; /* Lighter background */
+            color: #333; /* Darker text for better contrast */
+            font-size: 16px;
+            cursor: default; /* Custom default cursor */
+        }
+        .container {
+            display: flex;
+            min-height: 100vh; /* Ensure container takes full height */
+        }
+        .sidebar {
+            width: 280px; /* Slightly wider sidebar */
+            background-color: #2c3e50; /* Darker, more professional sidebar */
+            color: #ecf0f1; /* Lighter text in sidebar */
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            padding: 30px 20px; /* More padding */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Subtle shadow */
+        }
+        .sidebar h2 {
+            font-family: 'Lato', sans-serif;
+            color: #ecf0f1;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+        .sidebar a {
+            color: #bdc3c7; /* Softer link color */
+            text-decoration: none;
+            display: block;
+            padding: 12px 15px; /* More padding for links */
+            border-radius: 5px; /* Rounded corners for links */
+            transition: all 0.3s ease-in-out, transform 0.2s ease; /* Added transform transition */
+            font-size: 0.95rem;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #34495e; /* Darker background on hover/active */
+            color: #fff;
+            padding-left: 20px; /* Slight indent on hover/active */
+            transform: translateX(3px); /* Subtle slide effect */
+            cursor: pointer; /* Custom cursor for interactive elements */
+        }
+        .main-content {
+            margin-left: 280px; /* Match sidebar width */
+            padding: 40px 60px; /* More generous padding */
+            width: calc(100% - 280px);
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        header {
+            border-bottom: 1px solid #e0e0e0; /* Lighter border */
+            padding-bottom: 25px;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            font-family: 'Lato', sans-serif;
+            font-size: 3rem; /* Larger main heading */
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        section {
+            margin-bottom: 50px; /* More space between sections */
+            padding-top: 70px; /* Adjust for fixed header/nav */
+            margin-top: -70px;
+        }
+        h2 {
+            font-family: 'Lato', sans-serif;
+            font-size: 2.2rem; /* Larger section headings */
+            border-bottom: 2px solid #3498db; /* Accent color for headings */
+            padding-bottom: 15px;
+            margin-top: 0;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        h3 {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.7rem; /* Larger sub-headings */
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 90%; /* Slightly larger inline code */
+            border-radius: 4px;
+            font-family: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; /* Monospace font */
+        }
+        pre {
+            background-color: #282c34; /* Darker code block background */
+            color: #abb2bf; /* Lighter text for code */
+            padding: 25px; /* More padding */
+            border-radius: 8px; /* More rounded corners */
+            overflow-x: auto;
+            position: relative;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for code blocks */
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9rem; /* Slightly smaller font for code blocks */
+            line-height: 1.5;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 15px; /* Larger button */
+            border-radius: 5px;
+            cursor: pointer; /* Custom cursor for interactive elements */
+            opacity: 0.8;
+            transition: opacity 0.3s, background-color 0.3s, transform 0.2s ease; /* Added transform transition */
+            font-size: 0.85rem;
+        }
+        pre:hover .copy-btn {
+            opacity: 1;
+        }
+        .copy-btn:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px); /* Subtle lift effect */
+        }
+        .copy-btn.copied {
+            background-color: #28a745;
+        }
+        .note {
+            background-color: #e7f3fe;
+            border-left: 6px solid #3498db; /* Accent color for notes */
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+            color: #2c3e50;
+        }
+        .note p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        ul li, ol li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #3498db; /* Accent color for links */
+            text-decoration: none;
+            transition: color 0.3s, transform 0.2s ease; /* Added transform transition */
+            cursor: pointer; /* Custom cursor for interactive elements */
+        }
+        a:hover {
+            color: #2980b9; /* Darker accent on hover */
+            text-decoration: underline;
+            transform: translateY(-1px); /* Subtle lift effect */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
+            }
+            .main-content {
+                margin-left: 220px;
+                padding: 30px 40px;
+            }
+            header h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            h3 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+                box-shadow: none;
+            }
+            .sidebar h2 {
+                text-align: left;
+                border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 20px;
+            }
+            .sidebar a {
+                padding: 10px 15px;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            section {
+                padding-top: 40px;
+                margin-top: -40px;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>MeoMaya</h2>
+            <a href="#introduction" class="active">Introduction</a>
+            <a href="#installation">Installation</a>
+            <a href="#quick-start">Quick Start</a>
+            <a href="#core-components">Core Components</a>
+             <a href="#ml-utilities">Machine Learning</a>
+             <a href="#api">REST API</a>
+             <a href="#hardware">Hardware</a>
+            <a href="#advanced-sentiment-demo">Advanced Sentiment Demo</a>
+            <a href="#cli">CLI</a>
+            <a href="#advanced-usage">Advanced Usage</a>
+            <a href="#api-reference">API Reference</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+        </nav>
+        <main class="main-content">
+            <header>
+                <h1>MeoMaya Documentation</h1>
+                <p>A pure-Python, low-energy, high-speed NLP framework with optional multimodal pipelines, a local-only transformers wrapper, and an offline REST API.</p>
+            </header>
+
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <p>MeoMaya is a lightweight, high-performance Natural Language Processing (NLP) framework built entirely in Python. It is designed to be simple, modular, and efficient, making it an ideal choice for developers, researchers, and students who need a powerful NLP toolkit without the overhead of larger, more complex libraries.</p>
+                <p>The framework provides a complete text processing pipeline, including normalization, tokenization, part-of-speech (POS) tagging, and parsing. Additionally, it features a pure-Python machine learning stack with a TF-IDF vectorizer and a centroid-based classifier, allowing for straightforward implementation of text classification and analysis tasks.</p>
+                <div class="note">
+                    <p><strong>Philosophy:</strong> MeoMaya is built on the principle of providing core NLP functionalities in a clear and accessible manner. It prioritizes speed and low resource consumption, making it suitable for a wide range of applications, from web backends to embedded systems.</p>
+                </div>
+            </section>
+
+            <section id="installation">
+                <h2>2. Installation</h2>
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>Python 3.11 or higher</li>
+                    <li><code>pip</code> package manager</li>
+                </ul>
+                <h3>Steps</h3>
+                <p>1. <strong>Clone the repository:</strong></p>
+                <pre><code class="language-bash">git clone https://github.com/KashyapSinh-Gohil/meomaya.git
+cd meomaya</code></pre>
+                <p>2. <strong>Install core dependencies:</strong></p>
+                <pre><code class="language-bash">python -m venv .venv
+source .venv/bin/activate
+pip install -r meomaya/requirements.txt</code></pre>
+                <p>3. <strong>Optional Dependencies:</strong></p>
+                <p>For <strong>Indian language support</strong>, you need <code>indic-nlp-library</code>:</p>
+                <pre><code class="language-bash">pip install indic-nlp-library</code></pre>
+                 <p>For <strong>API and development</strong> tools, install the development dependencies:</p>
+                <pre><code class="language-bash">pip install -r requirements-dev.txt</code></pre>
+            </section>
+
+            <section id="quick-start">
+                <h2>3. Quick Start</h2>
+                <h3>Using the <code>Modelify</code> Class</h3>
+                <p>The <code>Modelify</code> class is the simplest entry point to MeoMaya's NLP pipeline. It encapsulates all the core components and runs them in the correct order.</p>
+                <pre><code class="language-python">from meomaya.core.modelify import Modelify
+
+# Initialize the model for text processing
+m = Modelify(mode="text")
+
+# Run the pipeline on your text
+result = m.run("MeoMaya makes NLP easy and fun!")
+
+# The result is a dictionary containing the processed text
+import json
+print(json.dumps(result, indent=2))</code></pre>
+                <h3>Using the CLI</h3>
+                <p>For quick tasks, you can use MeoMaya directly from your terminal. This is useful for testing or integrating with shell scripts.</p>
+                <pre><code class="language-bash">python -m meomaya "MeoMaya is great for command-line use." --mode text</code></pre>
+            </section>
+
+            <section id="core-components">
+                <h2>4. Core Components</h2>
+                <p>MeoMaya's core functionality is built around a pipeline of four main components. You can use them individually or together to build custom NLP workflows.</p>
+                <h3>Normalizer</h3>
+                <p>The <code>Normalizer</code> cleans and standardizes text. Its primary function is to convert text to lowercase, but it can be extended to handle other normalization tasks like removing punctuation or expanding contractions.</p>
+                <pre><code class="language-python">from meomaya.core.normalizer import Normalizer
+
+normalizer = Normalizer(lang="en")
+normalized_text = normalizer.normalize("This is an EXAMPLE sentence with some UPPERCASE words.")
+# Output: "this is an example sentence with some uppercase words."</code></pre>
+                <h3>Tokenizer</h3>
+                <p>The <code>Tokenizer</code> breaks down a string of text into a list of individual tokens. This is a fundamental step in most NLP tasks. MeoMaya's tokenizer is designed to handle various languages and can be customized.</p>
+                <pre><code class="language-python">from meomaya.core.tokenizer import Tokenizer
+
+tokenizer = Tokenizer(lang="en")
+tokens = tokenizer.tokenize("Hello, world! This is MeoMaya.")
+# Output: ['Hello', ',', 'world', '!', 'This', 'is', 'MeoMaya', '.']</code></pre>
+                <h3>Tagger</h3>
+                <p>The <code>Tagger</code>, or Part-of-Speech (POS) Tagger, assigns a grammatical category (like noun, verb, adjective, etc.) to each token. This provides valuable semantic information for further analysis.</p>
+                <pre><code class="language-python">from meomaya.core.tagger import Tagger
+
+tagger = Tagger(lang="en")
+tagged_tokens = tagger.tag(['MeoMaya', 'is', 'a', 'powerful', 'tool'])
+# Output: [('MeoMaya', 'NNP'), ('is', 'VBZ'), ('a', 'DT'), ('powerful', 'JJ'), ('tool', 'NN')]</code></pre>
+                <h3>Parser</h3>
+                <p>The <code>Parser</code> analyzes the grammatical structure of a sentence and creates a dependency parse tree. This reveals the relationships between words in the sentence. Currently, the parser in MeoMaya is a placeholder for a more complex implementation, but it demonstrates the structure of the pipeline.</p>
+                <pre><code class="language-python">from meomaya.core.parser import Parser
+
+parser = Parser(lang="en")
+parse_tree = parser.parse([('MeoMaya', 'NNP'), ('is', 'VBZ'), ('cool', 'JJ')])
+# Output: {'tree': [('MeoMaya', 'NNP'), ('is', 'VBZ'), ('cool', 'JJ')]}</code></pre>
+            </section>
+
+            <section id="ml-utilities">
+                <h2>5. Machine Learning Utilities</h2>
+                <p>MeoMaya includes a set of pure-Python machine learning tools for common NLP tasks like text classification.</p>
+                <h3>Vectorizer</h3>
+                <p>The <code>Vectorizer</code> converts text documents into numerical representations. It uses the Term Frequency-Inverse Document Frequency (TF-IDF) algorithm, which reflects how important a word is to a document in a collection or corpus.</p>
+                <pre><code class="language-python">from meomaya.ml.vectorizer import Vectorizer
+
+texts = [
+    "MeoMaya is a great NLP framework.",
+    "I enjoy using Python for NLP.",
+    "This framework is fast and efficient."
+]
+vectorizer = Vectorizer()
+X = vectorizer.fit_transform(texts)
+
+# X is a list of TF-IDF vectors, representing the input texts
+for i, doc in enumerate(texts):
+    print(f"Document {i+1}: {X[i]}")</code></pre>
+                <h3>Classifier</h3>
+                <p>The <code>Classifier</code> is a centroid-based classifier that uses cosine similarity to determine the category of a given text. It's a simple yet effective algorithm that works well for many text classification problems. For a more detailed example, including model training, saving, and prediction, please refer to the <a href="#advanced-sentiment-demo">Advanced Sentiment Demo</a> section.</p>
+                <pre><code class="language-python">from meomaya.ml.classifier import Classifier
+from meomaya.ml.vectorizer import Vectorizer
+
+# Example: Basic classification after training
+# (Assuming vectorizer and classifier are already trained and loaded)
+# vectorizer = ...
+# classifier = ...
+
+# new_text = "This is a great product!"
+# X_new = vectorizer.transform([new_text])
+# prediction = classifier.classify(X_new)
+# print(prediction)</code></pre>
+            </section>
+
+            <section id="api">
+                <h2>6. REST API</h2>
+                <p>Run the local FastAPI server (no third-party services required):</p>
+                <pre><code class="language-bash">uvicorn meomaya.api.server:app --host 0.0.0.0 --port 8000</code></pre>
+                <p>Call the API:</p>
+                <pre><code class="language-bash">curl -X POST http://localhost:8000/run -H 'Content-Type: application/json' \
+-d '{"input": "Hello from MeoMaya!", "mode": "text"}'</code></pre>
+                <p>Batch endpoint:</p>
+                <pre><code class="language-bash">curl -X POST http://localhost:8000/run/batch -H 'Content-Type: application/json' \
+-d '{"inputs": ["hi", "there"], "mode": "text"}'</code></pre>
+            </section>
+
+            <section id="hardware">
+                <h2>7. Hardware Selection</h2>
+                <p>MeoMaya detects hardware automatically (CPU/CUDA/MPS) without requiring torch by default.</p>
+                <pre><code class="language-python">from meomaya.core.hardware import select_device
+print(select_device())  # 'cpu', 'cuda', or 'mps'</code></pre>
+                <p>Override via environment variable:</p>
+                <pre><code class="language-bash">export MEOMAYA_DEVICE=cpu</code></pre>
+            </section>
+
+            <section id="advanced-sentiment-demo">
+                <h2>5.1 Advanced Sentiment Demo</h2>
+                <p>The <code>full_nlp_workflow_demo.py</code> script located in the <code>meomaya/examples/</code> directory demonstrates the MeoMaya NLP workflow end-to-end, including vectorization and classification.</p>
+
+                <h3>Training the Model</h3>
+                <p>Before you can predict sentiment, you need to train the model. This command will train the model using a sample dataset and save the trained vectorizer and classifier to the <code>sentiment_model/</code> directory.</p>
+                <pre><code class="language-bash">python meomaya/examples/full_nlp_workflow_demo.py</code></pre>
+                <div class="note">
+                    <p><strong>Note:</strong> The <code>PYTHONPATH</code> environment variable is set to ensure the script can locate the MeoMaya modules. You only need to train the model once.</p>
+                </div>
+
+                <h3>Batch processing example</h3>
+                <p>The demo also shows how to process multiple inputs using <code>TextPipeline.process_batch</code>.</p>
+            </section>
+
+            <section id="cli">
+                <h2>6. Command-Line Interface (CLI)</h2>
+                <p>MeoMaya's CLI provides a convenient way to access its features without writing any Python code.</p>
+                <h3>Basic Usage</h3>
+                <p>Use the module entry point:</p>
+                <pre><code class="language-bash">python -m meomaya "Your text here" --mode text</code></pre>
+                <h3>Options</h3>
+                <ul>
+                    <li><code>--mode</code>: Override auto-detected mode: <code>text</code>, <code>audio</code>, <code>image</code>, <code>video</code>, <code>3d</code>, <code>fusion</code>.</li>
+                    <li><code>--model</code>: Model name (placeholder; reserved for future model selection).</li>
+                </ul>
+            </section>
+
+            <section id="advanced-usage">
+                <h2>7. Advanced Usage</h2>
+                <h3>Building a Custom Pipeline</h3>
+                <p>One of MeoMaya's strengths is its modularity. You can easily create your own custom NLP pipelines by combining the core components in different ways.</p>
+                <pre><code class="language-python">from meomaya.core.normalizer import Normalizer
+from meomaya.core.tokenizer import Tokenizer
+from meomaya.core.tagger import Tagger
+from meomaya.core.parser import Parser
+
+def custom_pipeline(text: str, lang: str = "en"):
+    """A custom NLP pipeline that normalizes, tokenizes, and tags text."""
+    normalizer = Normalizer(lang)
+    tokenizer = Tokenizer(lang)
+    tagger = Tagger(lang)
+
+    normalized_text = normalizer.normalize(text)
+    tokens = tokenizer.tokenize(normalized_text)
+    tagged_tokens = tagger.tag(tokens)
+
+    return {
+        'normalized': normalized_text,
+        'tokens': tokens,
+        'tagged': tagged_tokens,
+    }
+
+# Run the custom pipeline
+result = custom_pipeline("This is a demonstration of a custom pipeline.")
+print(result)</code></pre>
+            </section>
+
+            <section id="api-reference">
+                <h2>8. API Reference</h2>
+                <h3>Core Module</h3>
+                <ul>
+                    <li><code>Normalizer(lang: str = "en")</code>
+                        <ul><li><code>normalize(text: str) -> str</code></li></ul>
+                    </li>
+                    <li><code>Tokenizer(lang: str = "en")</code>
+                        <ul><li><code>tokenize(text: str) -> list[str]</code></li></ul>
+                    </li>
+                    <li><code>Tagger(lang: str = "en")</code>
+                         <ul><li><code>tag(tokens: list[str]) -> list[tuple[str, str]]</code></li></ul>
+                    </li>
+                    <li><code>Parser(lang: str = "en")</code>
+                        <ul><li><code>parse(tagged_tokens: list[tuple[str, str]]) -> dict</code></li></ul>
+                    </li>
+                </ul>
+                <h3>ML Module</h3>
+                <ul>
+                    <li><code>Vectorizer()</code>
+                        <ul>
+                            <li><code>fit(documents: list[str])</code></li>
+                            <li><code>transform(documents: list[str]) -> list[list[float]]</code></li>
+                            <li><code>fit_transform(documents: list[str]) -> list[list[float]]</code></li>
+                        </ul>
+                    </li>
+                    <li><code>Classifier()</code>
+                        <ul>
+                            <li><code>train(X: list[list[float]], y: list[str])</code></li>
+                            <li><code>classify(X: list[list[float]]) -> list[str]</code></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>9. Troubleshooting</h2>
+                <h3>Common Issues</h3>
+                <ol>
+                    <li><strong>ImportError for <code>indic_nlp_library</code></strong>: If you are working with Indian languages and get an import error, make sure you have installed the optional dependency: <code>pip install indic-nlp-library</code>.</li>
+                    <li><strong>Incorrect Path for Corpus</strong>: When using the CLI with a corpus file, ensure you provide the correct path to the file.</li>
+                    <li><strong>Performance</strong>: For very large datasets, consider processing the data in batches to manage memory usage.</li>
+                </ol>
+                <h3>Getting Help</h3>
+                <p>If you're stuck, you can:</p>
+                <ul>
+                    <li>Review the test files in the <code>tests/</code> directory for more usage examples.</li>
+                    <li>Open an issue on the <a href="https://github.com/KashyapSinh-Gohil/meomaya/issues">GitHub issue tracker</a>.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script>
+        // Add copy to clipboard buttons to all pre tags
+        const preTags = document.querySelectorAll('pre');
+        preTags.forEach(pre => {
+            const code = pre.querySelector('code');
+            if (code) {
+                const button = document.createElement('button');
+                button.innerText = 'Copy';
+                button.classList.add('copy-btn');
+                button.addEventListener('click', () => {
+                    const content = code.innerText;
+                    navigator.clipboard.writeText(content).then(() => {
+                        button.innerText = 'Copied!';
+                        button.classList.add('copied');
+                        setTimeout(() => {
+                            button.innerText = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    });
+                });
+                pre.appendChild(button);
+            }
+        });
+
+        // Active link switching
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 65) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - Library-Projects
+  pull_request:
+    branches:
+      - main
+      - Library-Projects
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r meomaya/requirements.txt
+        pip install pytest pytest-cov
+        pip install -e meomaya/ # Install in editable mode for imports
+
+    - name: Run tests with coverage
+      run: |
+        # Set PYTHONPATH to ensure meomaya is importable
+        export PYTHONPATH=$GITHUB_WORKSPACE/meomaya
+        pytest --cov=meomaya --cov-report=xml meomaya/tests/
+
+
