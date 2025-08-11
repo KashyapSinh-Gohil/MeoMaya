@@ -109,6 +109,7 @@ body {
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-top: 80px;
 }
 
 .bg-ornaments {
@@ -178,11 +179,12 @@ body {
 .floating-code {
   position: absolute;
   top: 20%;
-  right: 10%;
+  right: 6%;
   color: rgba(255, 255, 255, 0.8);
   font-family: 'Monaco', 'Menlo', monospace;
   font-size: 0.9rem;
   animation: code-float 8s ease-in-out infinite;
+  max-width: 32ch;
 }
 
 .code-line {
@@ -221,7 +223,9 @@ body {
 
 .slides {
   position: relative;
-  height: 200px;
+  height: auto;
+  min-height: 160px;
+  transition: height 300ms ease;
 }
 
 .slide {
@@ -290,8 +294,8 @@ body {
   transform: translateY(-50%) scale(1.1);
 }
 
-.slider .prev { left: -60px; }
-.slider .next { right: -60px; }
+.slider .prev { left: 0.5rem; }
+.slider .next { right: 0.5rem; }
 
 .dots {
   display: flex;
@@ -922,6 +926,7 @@ body {
   .slider .nav {
     display: none;
   }
+  .floating-code { display: none; }
   
   .demo-container {
     grid-template-columns: 1fr;

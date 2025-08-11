@@ -340,6 +340,7 @@ pip install -r requirements-dev.txt</code></pre>
       const slider = document.querySelector('.slider');
       if(!slider) return;
       const slides = Array.from(slider.querySelectorAll('.slide'));
+      const slidesWrap = slider.querySelector('.slides');
       const prev = slider.querySelector('.prev');
       const next = slider.querySelector('.next');
       const dots = slider.querySelector('.dots');
@@ -352,6 +353,11 @@ pip install -r requirements-dev.txt</code></pre>
         index = (i + slides.length) % slides.length;
         slides[index].classList.add('active');
         dots.children[index] && dots.children[index].classList.add('active');
+        // adjust container height to current slide
+        if (slidesWrap) {
+          const activeHeight = slides[index].offsetHeight;
+          slidesWrap.style.height = activeHeight + 'px';
+        }
       }
       function autoplay(){
         clearInterval(timer);
@@ -372,6 +378,10 @@ pip install -r requirements-dev.txt</code></pre>
       document.addEventListener('keydown', (e)=>{
         if(e.key==='ArrowLeft') { go(index-1); autoplay(); }
         if(e.key==='ArrowRight'){ go(index+1); autoplay(); }
+      });
+      // initial height
+      requestAnimationFrame(()=>{
+        if (slidesWrap) slidesWrap.style.height = slides[index].offsetHeight + 'px';
       });
       autoplay();
     })();
