@@ -118,6 +118,7 @@ body {
   right: 0;
   bottom: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
 .orb {
@@ -239,7 +240,7 @@ body {
 }
 
 .slide h1 {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 700;
   margin: 0 0 1rem;
   line-height: 1.2;
@@ -535,6 +536,7 @@ body {
   line-height: 1.4;
   margin: 0;
   overflow-x: auto;
+  max-width: 100%;
 }
 
 /* Demo Section */
@@ -696,6 +698,7 @@ body {
   height: 200px;
   perspective: 1000px;
   cursor: pointer;
+  transform-style: preserve-3d;
 }
 
 .post-front, .post-back {
@@ -712,6 +715,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 
 .post-back {
@@ -720,7 +724,9 @@ body {
   color: white;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
+.post-front { z-index: 2; }
 
 .post-card:hover .post-front {
   transform: rotateY(180deg);
@@ -805,6 +811,28 @@ body {
   overflow-x: auto;
   margin: 0;
 }
+
+/* Mini code blocks and copy buttons in blog and showcase */
+.mini-code {
+  background: var(--bg-dark);
+  color: #e5e7eb;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-top: 0.75rem;
+  max-height: 140px;
+  overflow: auto;
+}
+
+.copy-mini {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.copy-inline { margin-top: 0.5rem; }
 
 /* Footer */
 .site-footer {

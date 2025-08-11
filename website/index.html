@@ -482,7 +482,7 @@ pip install -r requirements-dev.txt</code></pre>
       });
     })();
 
-    // Tilt effect for feature cards
+    // Tilt effect for feature cards (softened to avoid overflow)
     document.querySelectorAll('[data-tilt]').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -490,9 +490,9 @@ pip install -r requirements-dev.txt</code></pre>
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        const rotateX = Math.max(-6, Math.min(6, (y - centerY) / 14));
+        const rotateY = Math.max(-6, Math.min(6, (centerX - x) / 14));
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
       });
       
       card.addEventListener('mouseleave', () => {
