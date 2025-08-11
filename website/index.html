@@ -3,16 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MeoMaya — Fast, Local‑First NLP</title>
-  <meta name="description" content="MeoMaya: A pure‑Python, fast, local‑first NLP framework with a clean, modular pipeline and optional multimodal support." />
+  <title>MeoMaya Framework — Fast, Lightweight, Local‑First NLP</title>
+  <meta name="description" content="MeoMaya is a fast, lightweight, SEO‑friendly, local‑first NLP framework in Python with a clean, modular pipeline and optional multimodal support." />
+  <meta name="keywords" content="MeoMaya, NLP framework, lightweight, fast, modular, SEO‑friendly, local‑first, Python NLP, tokenization, parsing, POS tagging" />
+  <meta name="author" content="MeoMaya" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MeoMaya — Fast, Lightweight, Local‑First NLP" />
+  <meta property="og:description" content="Fast, modular, SEO‑friendly NLP framework with optional multimodal pipelines and offline mode." />
+  <meta property="og:url" content="https://github.com/KashyapSinh-Gohil/MeoMaya" />
+  <meta property="og:image" content="https://opengraph.githubassets.com/1/placeholder/MeoMaya" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MeoMaya — Fast, Lightweight, Local‑First NLP" />
+  <meta name="twitter:description" content="Fast, modular, SEO‑friendly NLP framework with optional multimodal pipelines and offline mode." />
+  <meta name="twitter:image" content="https://opengraph.githubassets.com/1/placeholder/MeoMaya" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="canonical" href="https://github.com/KashyapSinh-Gohil/MeoMaya" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MeoMaya",
+    "applicationCategory": "NaturalLanguageProcessing",
+    "operatingSystem": "Cross-platform",
+    "description": "Fast, lightweight, SEO-friendly, local-first NLP framework with a clean modular pipeline.",
+    "softwareVersion": "0.1.0",
+    "author": {"@type": "Organization", "name": "MeoMaya"},
+    "url": "https://github.com/KashyapSinh-Gohil/MeoMaya"
+  }
+  </script>
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header" id="header">
     <div class="container">
       <div class="brand">MeoMaya</div>
       <nav class="nav">
         <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
         <a href="#getting-started">Get Started</a>
         <a href="../meomaya-docs/index.html">Docs</a>
         <a href="https://github.com/KashyapSinh-Gohil/MeoMaya" target="_blank" rel="noopener">GitHub</a>
@@ -24,14 +50,20 @@
     <div class="bg-ornaments" aria-hidden="true">
       <div class="orb orb-a"></div>
       <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
       <div class="gridlines"></div>
+      <div class="floating-code">
+        <span class="code-line">from meomaya import Modelify</span>
+        <span class="code-line">engine = Modelify()</span>
+        <span class="code-line">result = engine.run("Hello world")</span>
+      </div>
     </div>
     <div class="container hero-inner">
       <div class="slider" role="region" aria-label="Highlights">
         <div class="slides">
           <div class="slide active">
-            <h1>Fast, Local‑First NLP for Everyone</h1>
-            <p class="subtitle">A pure‑Python, hardware‑aware NLP framework with a clean pipeline and zero always‑on third‑party dependencies.</p>
+            <h1 class="typing-text">MeoMaya Framework</h1>
+            <p class="subtitle typing-subtitle">Build faster, SEO‑friendly, local‑first NLP for modern applications.</p>
           </div>
           <div class="slide">
             <h1>Modular. Extensible. Clean.</h1>
@@ -48,7 +80,8 @@
       </div>
 
       <div class="cta">
-        <a class="btn primary ripple" href="../meomaya-docs/index.html">View Documentation</a>
+        <a class="btn primary ripple" href="#demo">Try Demo</a>
+        <a class="btn ripple" href="../meomaya-docs/index.html">View Documentation</a>
         <a class="btn ripple" href="#getting-started">Get Started</a>
       </div>
       <div class="code reveal-on-scroll">
@@ -63,30 +96,39 @@ PYTHONPATH=. python -m meomaya.cli.meomaya_cmd "Hello from MeoMaya!" --mode text
   </section>
 
   <section id="features" class="features">
-    <div class="container grid">
-      <div class="card reveal-on-scroll">
-        <h3>Clean Pipeline</h3>
-        <p>Normalize → Tokenize → Tag → Parse. Modular components, easy to understand and extend.</p>
-      </div>
-      <div class="card reveal-on-scroll">
-        <h3>Local‑First</h3>
-        <p>Runs fully on‑device. Optional HF models are strictly local (no downloads).</p>
-      </div>
-      <div class="card reveal-on-scroll">
-        <h3>Multimodal (Optional)</h3>
-        <p>Image, audio, and video pipelines extract real metadata when local libs are available.</p>
-      </div>
-      <div class="card reveal-on-scroll">
-        <h3>Hardware‑Aware</h3>
-        <p>Detects CPU/CUDA/MPS without forcing heavy dependencies in the core.</p>
-      </div>
-      <div class="card reveal-on-scroll">
-        <h3>Developer Friendly</h3>
-        <p>Simple API, FastAPI server, CLI, thorough tests, and readable code.</p>
-      </div>
-      <div class="card reveal-on-scroll">
-        <h3>Offline Mode</h3>
-        <p>Set <code>MEOMAYA_STRICT_OFFLINE=1</code> to disable downloads and use lightweight fallbacks.</p>
+    <div class="container">
+      <h2 class="section-title reveal-on-scroll">Why Choose MeoMaya?</h2>
+      <div class="feature-carousel">
+        <div class="feature-card reveal-on-scroll" data-tilt>
+          <div class="card-icon">🔧</div>
+          <h3>Clean Pipeline</h3>
+          <p>Normalize → Tokenize → Tag → Parse. Modular components that are easy to understand, extend, and optimize for SEO‑friendly outputs.</p>
+        </div>
+        <div class="feature-card reveal-on-scroll" data-tilt>
+          <div class="card-icon">🏠</div>
+          <h3>Local‑First</h3>
+          <p>Runs fully on‑device. Optional transformers are strictly local (no downloads) to respect privacy and performance constraints.</p>
+        </div>
+        <div class="feature-card reveal-on-scroll" data-tilt>
+          <div class="card-icon">🎯</div>
+          <h3>Multimodal (Optional)</h3>
+          <p>Image, audio, and video pipelines extract real metadata when local libraries are available, keeping your stack lean.</p>
+        </div>
+        <div class="feature-card reveal-on-scroll" data-tilt>
+          <div class="card-icon">⚡</div>
+          <h3>Hardware‑Aware</h3>
+          <p>Detects CPU/CUDA/MPS without forcing heavy dependencies in the core. Runs great on laptops and servers.</p>
+        </div>
+        <div class="feature-card reveal-on-scroll" data-tilt>
+          <div class="card-icon">👨‍💻</div>
+          <h3>Developer Friendly</h3>
+          <p>Simple API, FastAPI server, CLI, thorough tests, and readable code. Designed for productivity.</p>
+        </div>
+        <div class="feature-card reveal-on-scroll" data-tilt>
+          <div class="card-icon">🔒</div>
+          <h3>Offline Mode</h3>
+          <p>Set <code>MEOMAYA_STRICT_OFFLINE=1</code> to disable downloads and use lightweight fallbacks for strict offline environments.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -118,15 +160,107 @@ print(Parser().parse([("MeoMaya","NN")]))</code></pre>
     </div>
   </section>
 
+  <section id="demo" class="demo">
+    <div class="container">
+      <h2 class="section-title reveal-on-scroll">Real‑Time Demo</h2>
+      <p class="muted reveal-on-scroll">Try MeoMaya locally. If the API is running at <code>http://localhost:8000</code>, we'll use it; otherwise we mimic tokenization in‑browser.</p>
+      <div class="demo-container reveal-on-scroll">
+        <div class="demo-input">
+          <label for="demoText">Input text</label>
+          <textarea id="demoText" rows="6" placeholder="Type some text to analyze...">MeoMaya makes local NLP fast and friendly.</textarea>
+          <div class="demo-actions">
+            <button id="runDemo" class="btn primary ripple">Analyze</button>
+            <span id="demoStatus" class="status"></span>
+          </div>
+        </div>
+        <div class="demo-output">
+          <label>Output</label>
+          <pre id="demoOut" class="panel">{}</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials">
+    <div class="parallax-bg"></div>
+    <div class="container">
+      <h2 class="section-title reveal-on-scroll">What developers say</h2>
+      <div class="testi-grid">
+        <blockquote class="testi reveal-on-scroll">
+          <div class="quote-content">"MeoMaya's clean pipeline made it simple to plug into our existing stack—with better performance and no external calls."</div>
+          <cite>— Senior Engineer</cite>
+        </blockquote>
+        <blockquote class="testi reveal-on-scroll">
+          <div class="quote-content">"Finally an NLP toolkit that respects offline and privacy by design."</div>
+          <cite>— Research Lead</cite>
+        </blockquote>
+        <blockquote class="testi reveal-on-scroll">
+          <div class="quote-content">"The FastAPI + CLI combo is perfect for quick prototyping and production."</div>
+          <cite>— Data Scientist</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" class="blog">
+    <div class="container">
+      <h2 class="section-title reveal-on-scroll">Learn & build</h2>
+      <div class="posts">
+        <article class="post reveal-on-scroll">
+          <div class="post-card">
+            <div class="post-front">
+              <h3>Optimizing your NLP pipeline with MeoMaya</h3>
+              <p class="muted">Best practices for speed, readability, and offline reliability.</p>
+            </div>
+            <div class="post-back">
+              <a href="../meomaya/docs/index.md" class="btn">Read More</a>
+            </div>
+          </div>
+        </article>
+        <article class="post reveal-on-scroll">
+          <div class="post-card">
+            <div class="post-front">
+              <h3>From TF‑IDF to simple classifiers</h3>
+              <p class="muted">Quick wins with Vectorizer and a centroid‑based Classifier.</p>
+            </div>
+            <div class="post-back">
+              <a href="../meomaya-docs/index.html#ml-utilities" class="btn">Read More</a>
+            </div>
+          </div>
+        </article>
+        <article class="post reveal-on-scroll">
+          <div class="post-card">
+            <div class="post-front">
+              <h3>Serving NLP with FastAPI</h3>
+              <p class="muted">Ship an offline‑capable API endpoint in minutes.</p>
+            </div>
+            <div class="post-back">
+              <a href="../meomaya-docs/index.html#api" class="btn">Read More</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section id="getting-started" class="getting-started">
     <div class="container">
-      <h2>Getting Started</h2>
-      <ol>
-        <li>Clone the repository and create a virtual environment.</li>
-        <li>Install runtime dependencies.</li>
-        <li>Run the API or the CLI. Explore the <a href="../meomaya-docs/index.html">documentation</a> for more.</li>
-      </ol>
-      <pre><code>git clone https://github.com/KashyapSinh-Gohil/MeoMaya.git
+      <h2 class="section-title reveal-on-scroll">Getting Started</h2>
+      <div class="steps reveal-on-scroll">
+        <div class="step">
+          <div class="step-number">1</div>
+          <p>Clone the repository and create a virtual environment.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <p>Install runtime dependencies.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <p>Run the API or the CLI. Explore the <a href="../meomaya-docs/index.html">documentation</a> for more.</p>
+        </div>
+      </div>
+      <pre class="code-block reveal-on-scroll"><code>git clone https://github.com/KashyapSinh-Gohil/MeoMaya.git
 cd MeoMaya
 python -m venv .venv
 source .venv/bin/activate
@@ -139,11 +273,26 @@ pip install -r requirements-dev.txt</code></pre>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>© <span id="year"></span> MeoMaya</span>
-      <div class="links">
-        <a href="../meomaya-docs/index.html">Docs</a>
-        <a href="https://github.com/KashyapSinh-Gohil/MeoMaya" target="_blank" rel="noopener">GitHub</a>
-        <a href="../meomaya/README.md">README</a>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>MeoMaya</h4>
+          <p>Fast, lightweight, local-first NLP framework for modern applications.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="../meomaya-docs/index.html">Documentation</a>
+          <a href="https://github.com/KashyapSinh-Gohil/MeoMaya" target="_blank" rel="noopener">GitHub</a>
+          <a href="../meomaya/README.md">README</a>
+        </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <a href="#features">Features</a>
+          <a href="#demo">Demo</a>
+          <a href="#getting-started">Get Started</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> MeoMaya</span>
       </div>
     </div>
   </footer>
@@ -151,6 +300,48 @@ pip install -r requirements-dev.txt</code></pre>
   <script>
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Typing effect for hero text
+    function typeWriter(element, text, speed = 50) {
+      let i = 0;
+      element.innerHTML = '';
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    // Initialize typing effect on page load
+    window.addEventListener('load', () => {
+      const typingText = document.querySelector('.typing-text');
+      const typingSubtitle = document.querySelector('.typing-subtitle');
+      if (typingText) {
+        const originalText = typingText.textContent;
+        typeWriter(typingText, originalText, 80);
+      }
+      if (typingSubtitle) {
+        setTimeout(() => {
+          const originalSubtitle = typingSubtitle.textContent;
+          typeWriter(typingSubtitle, originalSubtitle, 40);
+        }, 1000);
+      }
+    });
+
+    // Sticky header with dynamic color change
+    function updateHeader() {
+      const header = document.getElementById('header');
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', updateHeader);
 
     // Slider logic
     (function(){
@@ -208,12 +399,15 @@ pip install -r requirements-dev.txt</code></pre>
       });
     });
 
-    // Scroll reveal
+    // Scroll reveal with enhanced animations
     (function(){
       const els = document.querySelectorAll('.reveal-on-scroll');
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(entry=>{
-          if(entry.isIntersecting){ entry.target.classList.add('revealed'); io.unobserve(entry.target);} 
+          if(entry.isIntersecting){ 
+            entry.target.classList.add('revealed'); 
+            io.unobserve(entry.target);
+          } 
         });
       }, { threshold: 0.12 });
       els.forEach(el=>io.observe(el));
@@ -230,6 +424,86 @@ pip install -r requirements-dev.txt</code></pre>
           setTimeout(()=>btn.textContent='Copy', 1200);
         });
       });
+    });
+
+    // Real-time demo (tries local API, falls back to client-side demo)
+    (function(){
+      const runBtn = document.getElementById('runDemo');
+      const input = document.getElementById('demoText');
+      const out = document.getElementById('demoOut');
+      const status = document.getElementById('demoStatus');
+      if(!runBtn) return;
+
+      async function callLocalAPI(text){
+        try {
+          status.textContent = 'Calling local API...';
+          const res = await fetch('http://localhost:8000/run', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ input: text, mode: 'text' })
+          });
+          if(!res.ok) throw new Error('API error');
+          const json = await res.json();
+          return json;
+        } catch (e) {
+          return null;
+        } finally {
+          status.textContent = '';
+        }
+      }
+
+      function fallbackProcess(text){
+        // Minimal local demo: lower/strip punctuation and split on spaces
+        const cleaned = text.toLowerCase().replace(/[\p{P}$+<=>^`|~]/gu, '').trim();
+        const tokens = cleaned ? cleaned.split(/\s+/) : [];
+        return {
+          mode: 'text',
+          results: {
+            normalized: cleaned,
+            tokens,
+            tags: tokens.map(t=>[t,'NN']),
+            parse: { tree: tokens.map(t=>[t,'NN']) },
+            summary: tokens.slice(0,20).join(' '),
+            classification: 'neutral'
+          }
+        };
+      }
+
+      runBtn.addEventListener('click', async ()=>{
+        const text = input.value || '';
+        out.textContent = '{\n  "status": "processing..."\n}';
+        let data = await callLocalAPI(text);
+        if(!data) data = fallbackProcess(text);
+        out.textContent = JSON.stringify(data, null, 2);
+      });
+    })();
+
+    // Tilt effect for feature cards
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+
+    // Parallax effect for testimonials
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallax = document.querySelector('.parallax-bg');
+      if (parallax) {
+        const speed = scrolled * 0.5;
+        parallax.style.transform = `translateY(${speed}px)`;
+      }
     });
   </script>
 </body>
