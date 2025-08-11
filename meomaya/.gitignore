@@ -1,0 +1,21 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test/cache
+.pytest_cache/
+.coverage
+.coverage.*
+
+# Build/dist
+build/
+dist/
+*.egg-info/
+
+# OS/editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
