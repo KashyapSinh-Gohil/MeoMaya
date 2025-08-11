@@ -379,10 +379,12 @@ pip install -r requirements-dev.txt</code></pre>
         if(e.key==='ArrowLeft') { go(index-1); autoplay(); }
         if(e.key==='ArrowRight'){ go(index+1); autoplay(); }
       });
-      // initial height
-      requestAnimationFrame(()=>{
+      // initial height and on resize
+      function sizeToActive(){
         if (slidesWrap) slidesWrap.style.height = slides[index].offsetHeight + 'px';
-      });
+      }
+      requestAnimationFrame(sizeToActive);
+      window.addEventListener('resize', sizeToActive);
       autoplay();
     })();
 
