@@ -15,10 +15,6 @@
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
   --gradient-alt: linear-gradient(135deg, var(--accent), var(--primary));
-  /* Hero dynamic sizing */
-  --hero-h1: 3.5rem;
-  --hero-sub: 1.25rem;
-  --hero-scale: 1;
 }
 
 * { box-sizing: border-box; }
@@ -249,7 +245,7 @@ body {
 }
 
 .slide h1 {
-  font-size: var(--hero-h1);
+  font-size: var(--hero-h1, clamp(2rem, 6vw, 3.5rem));
   font-weight: 700;
   margin: 0 0 1rem;
   line-height: 1.2;
@@ -266,7 +262,7 @@ body {
 }
 
 .subtitle {
-  font-size: var(--hero-sub);
+  font-size: var(--hero-sub, 1.25rem);
   opacity: 0.9;
   margin: 0;
   max-width: 600px;

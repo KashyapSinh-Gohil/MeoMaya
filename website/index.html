@@ -379,16 +379,21 @@ pip install -r requirements-dev.txt</code></pre>
         if(e.key==='ArrowLeft') { go(index-1); autoplay(); }
         if(e.key==='ArrowRight'){ go(index+1); autoplay(); }
       });
-      // initial height and on resize + dynamic typographic scaling for hero
+      // initial height and on resize + smart responsive hero sizing
       function sizeToActive(){
         if (slidesWrap) slidesWrap.style.height = slides[index].offsetHeight + 'px';
         const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-        // scale hero text between small and large viewports
-        const scale = Math.min(1.0, Math.max(0.7, Math.min(vw/1440, vh/900)));
-        document.documentElement.style.setProperty('--hero-scale', scale.toFixed(3));
-        document.documentElement.style.setProperty('--hero-h1', `${Math.round(56*scale)}px`);
-        document.documentElement.style.setProperty('--hero-sub', `${Math.round(20*scale)}px`);
+        // Scale between 360px and 1600px viewport widths
+        const t = Math.min(1, Math.max(0, (vw - 360) / (1600 - 360)));
+        const h1Min = 32;  // px
+        const h1Max = 56;  // px
+        const subMin = 16; // px
+        const subMax = 20; // px
+        const h1 = Math.round(h1Min + (h1Max - h1Min) * t);
+        const sub = Math.round(subMin + (subMax - subMin) * t);
+        document.documentElement.style.setProperty('--hero-h1', h1 + 'px');
+        document.documentElement.style.setProperty('--hero-sub', sub + 'px');
       }
       requestAnimationFrame(sizeToActive);
       window.addEventListener('resize', sizeToActive);
