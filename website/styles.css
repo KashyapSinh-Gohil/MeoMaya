@@ -17,19 +17,6 @@
   --gradient-alt: linear-gradient(135deg, var(--accent), var(--primary));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #e5e7eb;
-    --text-light: #9ca3af;
-    --bg: #0b1020;
-    --bg-alt: #0f172a;
-    --bg-dark: #020617;
-    --border: #1f2937;
-    --shadow: 0 10px 20px -15px rgba(0,0,0,0.6);
-    --shadow-lg: 0 30px 50px -15px rgba(0,0,0,0.6);
-  }
-}
-
 * { box-sizing: border-box; }
 
 body {
@@ -39,12 +26,6 @@ body {
   color: var(--text);
   background: var(--bg);
   overflow-x: hidden;
-}
-
-/* Dark/Light theme via data-theme override */
-[data-theme="dark"] body, html[data-theme="dark"] body {
-  color: var(--text);
-  background: var(--bg);
 }
 
 .container {
@@ -77,19 +58,6 @@ body {
   align-items: center;
   padding: 1rem 2rem;
 }
-
-.theme-toggle {
-  margin-left: 1rem;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.theme-toggle:hover { box-shadow: var(--shadow); }
 
 .brand {
   font-size: 1.5rem;
@@ -744,23 +712,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.mini-code {
-  background: var(--bg-dark);
-  color: #e5e7eb;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  margin-top: 0.75rem;
-}
-
-.copy-mini {
-  margin-top: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
 }
 
 .post-back {
