@@ -1,7 +1,6 @@
 # MeoMaya
 
 [![License](https://img.shields.io/badge/License-Polyform%20Noncommercial%201.0.0-blue.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0)
-[![PyPI version](https://badge.fury.io/py/meomaya.svg)](https://badge.fury.io/py/meomaya)
 
 **A pure-Python, high-speed NLP framework with a clean, modular core for text processing. Now with optional multimodal pipelines, local-only transformers, a REST API, and hardware-aware execution (CPU/CUDA/MPS).**
 
