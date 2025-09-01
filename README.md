@@ -2,6 +2,9 @@
 
 A pure-Python, high-speed NLP framework with a clean, modular core for text processing. Optional multimodal pipelines, local-only transformers, a REST API, and hardware-aware execution (CPU/CUDA/MPS).
 
+[![Demo video](Docs/thumbnail.png)](Docs/demo.mp4)
+
+
 ## Quick start
 
 ```bash
