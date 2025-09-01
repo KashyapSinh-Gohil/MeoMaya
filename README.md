@@ -2,7 +2,8 @@
 
 A pure-Python, high-speed NLP framework with a clean, modular core for text processing. Optional multimodal pipelines, local-only transformers, a REST API, and hardware-aware execution (CPU/CUDA/MPS).
 
-[![Demo video](Docs/thumbnail.png)](Docs/Quick%20demo.mp4)
+[![Watch Quick demo](./Docs/thumbnail.png)](https://github.com/KashyapSinh-Gohil/MeoMaya/blob/MeoX/Docs/Quick%20demo.mp4)
+
 
 
 ## Quick start
