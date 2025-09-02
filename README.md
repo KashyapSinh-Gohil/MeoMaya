@@ -2,9 +2,12 @@
 
 A pure-Python, high-speed NLP framework with a clean, modular core for text processing. Optional multimodal pipelines, local-only transformers, a REST API, and hardware-aware execution (CPU/CUDA/MPS).
 
-[![Watch Quick demo](./Docs/thumbnail.png)](https://github.com/KashyapSinh-Gohil/MeoMaya/blob/MeoX/Docs/Quick%20demo.mp4)
+
+[![Documentation](https://img.shields.io/badge/Docs-Site-blue?logo=github)](https://kashyapsinh-gohil.github.io/MeoMaya-Info/) 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1G61wWs2pzCKJ2lyVkrtYVjIq_lBZPFrW?usp=sharing)
 
 
+https://github.com/user-attachments/assets/df92d1db-3bd6-445e-a502-fb730513847d
 
 ## Quick start
 
